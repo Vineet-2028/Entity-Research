@@ -15,7 +15,7 @@ import os
 from pathlib import Path
 
 PKG_ROOT = Path(__file__).resolve().parents[2]            # .../code/business_entity_resolution
-ZIP_ROOT = PKG_ROOT.parents[1]                            # the folder that contains code/ and output/
+ZIP_ROOT = PKG_ROOT                            # the folder that contains code/ and output/
 
 
 def _data_dir() -> Path:

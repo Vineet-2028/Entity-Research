@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+!.env.example
+.pytest_cache/
+.ipynb_checkpoints/
+dataset/
+work/
+output/
+*.zip
+*.pkl
+*.pt
+*.pth
+*.safetensors

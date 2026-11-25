@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 """Check the two output files and make <team>_submission.zip (output/, code/, Documentation_template.md).
 
-  python code/business_entity_resolution/src/make_submission_zip.py --team COD-i [--test-dir dataset/test]
+  python src/make_submission_zip.py --team COD-i [--test-dir dataset/test]
 
-Run it from any folder. It uses the folder that contains code/ and output/ as the root of the ZIP.
+Run it from any folder. It reads output/ and source files in this checkout and writes a challenge-layout ZIP.
 Only the Python standard library is necessary.
 """
 from __future__ import annotations
@@ -15,7 +15,7 @@ import zipfile
 from pathlib import Path
 
 PKG = Path(__file__).resolve().parents[1]          # code/business_entity_resolution
-ROOT = PKG.parents[1]
+ROOT = PKG
 SKIP_DIRS = {"work", "__pycache__", "dataset", ".ipynb_checkpoints"}
 
 
@@ -38,7 +38,7 @@ def main():
     ap.add_argument("--test-dir", help="dataset/test folder: if given, the official validator runs before the ZIP is made")
     ap.add_argument("--validator", help="path of validate_submission.py (default: utils/ next to the dataset folder)")
     a = ap.parse_args()
-    m, c, doc = ROOT / "output" / "matching_results.tsv", ROOT / "output" / "candidate_pairs.tsv", ROOT / "Documentation_template.md"
+    m, c, doc = ROOT / "output" / "matching_results.tsv", ROOT / "output" / "candidate_pairs.tsv", ROOT / "TECHNICAL_REPORT.md"
     for p in (m, c, doc, PKG / "README.md", PKG / "requirements.txt"):
         if not p.exists():
             sys.exit(f"missing: {p}")
@@ -50,21 +50,27 @@ def main():
         sys.exit("the two files do not have the same number of rows")
     if a.test_dir:
         test_dir = Path(a.test_dir)
-        val = Path(a.validator) if a.validator else test_dir.parent.parent / "utils" / "validate_submission.py"
+        val = Path(a.validator) if a.validator else test_dir.resolve().parent.parent / "utils" / "validate_submission.py"
         if not val.exists():
             sys.exit(f"validator not found: {val} (use --validator)")
         r = subprocess.run([sys.executable, str(val), "--matching", str(m), "--candidate", str(c), "--test-dir", str(test_dir)])
         if r.returncode != 0:
             sys.exit("the official validator reported problems: no ZIP made")
     out = ROOT / f"{a.team}_submission.zip"
-    pdf = ROOT / 'Documentation_template.pdf'
-    files = [m, c, doc] + ([pdf] if pdf.exists() else []) + sorted(p for p in PKG.rglob("*") if p.is_file() and not (set(p.relative_to(PKG).parts) & SKIP_DIRS) and p.suffix != ".pyc")
+    # Keep the original challenge archive layout; never collect arbitrary checkout files.
+    files = [(m, "output/matching_results.tsv"), (c, "output/candidate_pairs.tsv"),
+             (doc, "Documentation_template.md")]
+    base = "code/business_entity_resolution/"
+    for name in ("requirements.txt", "run_pipeline.sh", "read_before_run.md"):
+        files.append((ROOT / name, base + ("README.md" if name == "read_before_run.md" else name)))
+    for p in sorted((ROOT / "src").rglob("*.py")):
+        files.append((p, base + p.relative_to(ROOT).as_posix()))
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as z:
-        for p in files:
-            z.write(p, p.relative_to(ROOT).as_posix())
+        for p, arcname in files:
+            z.write(p, arcname)
     print(f"{out}  ({out.stat().st_size / 2**20:.0f} MB, {len(files)} files)")
-    for p in files:
-        print("  ", p.relative_to(ROOT).as_posix())
+    for _, arcname in files:
+        print("  ", arcname)
 
 
 if __name__ == "__main__":

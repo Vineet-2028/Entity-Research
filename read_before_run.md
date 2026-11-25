@@ -5,7 +5,7 @@ This folder contains the full pipeline. It reads the challenge data and writes t
 - `output/matching_results.tsv` — the final matches
 - `output/candidate_pairs.tsv` — the candidate set that the matcher scores
 
-The method is in `Documentation_template.md` (at the top of the ZIP). This file tells you how to run the code.
+The method is in `TECHNICAL_REPORT.md` (in this checkout). This file tells you how to run the code.
 
 ## 1. Pipeline
 
@@ -42,7 +42,7 @@ The pipeline uses only the challenge data. It does not use external data, an ext
 - Internet access for the first run of step 1. It downloads `intfloat/multilingual-e5-small` from Hugging Face.
 
 ```bash
-cd code/business_entity_resolution
+cd Entity-Research
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -60,8 +60,7 @@ dataset/
 └── test/   test_source1.tsv   test_source2.tsv   test_source3.tsv
 ```
 
-The scripts look for `dataset/` in these places: `code/business_entity_resolution/dataset`, then the folder that
-contains `code/`, then the current folder. You can also give the folder with `--data-dir`.
+The scripts look for `dataset/` in these places: `dataset/` in the repository or current working directory. You can also give the folder with `--data-dir`.
 
 ## 4. Run
 
@@ -79,7 +78,7 @@ python src/step2_cross_encoder.py --data-dir /path/to/dataset    # GPU
 python src/step3_matcher.py       --data-dir /path/to/dataset    # CPU
 ```
 
-Step 3 writes `matching_results.tsv` and `candidate_pairs.tsv` into the `output/` folder next to `code/`.
+Step 3 writes `matching_results.tsv` and `candidate_pairs.tsv` into the `output/` folder in this checkout.
 Then it runs the official validator (`utils/validate_submission.py` next to the dataset folder, or `--validator <path>`).
 
 ### Options that all steps have
@@ -87,8 +86,8 @@ Then it runs the official validator (`utils/validate_submission.py` next to the 
 | Option | Default | Function |
 |---|---|---|
 | `--data-dir` | see section 3 | folder that contains `train/` and `test/` |
-| `--work-dir` | `code/business_entity_resolution/work` | intermediate files (see section 6) |
-| `--out-dir` | `output/` next to `code/` | folder for the two TSV files |
+| `--work-dir` | `work/` | intermediate files (see section 6) |
+| `--out-dir` | `output/` in this checkout | folder for the two TSV files |
 | `--threads` | all CPUs of the process | CPU threads |
 
 ### If a run stops
@@ -207,8 +206,8 @@ No other pre-trained model is used. No large language model is used.
 ## 10. Make the submission ZIP
 
 ```bash
-python code/business_entity_resolution/src/make_submission_zip.py --team COD-i --test-dir /path/to/dataset/test
+python src/make_submission_zip.py --team COD-i --test-dir /path/to/dataset/test
 ```
 
-The script checks the two TSV files, runs the official validator and writes `COD-i_submission.zip` next to `code/`.
+The script checks the two TSV files, runs the official validator and writes `COD-i_submission.zip` in the repository.
 The work folder and the dataset are not put into the ZIP.

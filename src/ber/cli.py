@@ -8,9 +8,9 @@ import os
 
 def parse(description: str, extra=None) -> argparse.Namespace:
     ap = argparse.ArgumentParser(description=description, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--data-dir", help="folder that contains train/ and test/ (default: ./dataset next to code/ or in this folder)")
-    ap.add_argument("--work-dir", help="folder for intermediate files (default: code/business_entity_resolution/work)")
-    ap.add_argument("--out-dir", help="folder for the two submission TSV files (default: output/ next to code/)")
+    ap.add_argument("--data-dir", help="folder that contains train/ and test/ (default: dataset/ in the repository or current directory)")
+    ap.add_argument("--work-dir", help="folder for intermediate files (default: work/)")
+    ap.add_argument("--out-dir", help="folder for the two submission TSV files (default: output/ in the repository)")
     ap.add_argument("--threads", type=int, help="CPU threads (default: all CPUs available to the process)")
     if extra:
         extra(ap)
