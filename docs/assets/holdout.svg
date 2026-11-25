@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="254" viewBox="0 0 760 254" role="img" aria-label="Reported outer holdout macro F0.5 (%)">
+<rect width="100%" height="100%" rx="12" fill="#f8fafc"/>
+<text x="24" y="35" font-size="21" font-family="Arial,sans-serif" font-weight="bold" fill="#17324d">Reported outer holdout macro F0.5 (%)</text>
+<text x="24" y="81" font-family="Arial,sans-serif" font-size="15" fill="#17324d">Statistical pipeline</text>
+<rect x="230" y="62" width="390" height="26" rx="4" fill="#e2e8f0"/>
+<rect x="230" y="62" width="371.90" height="26" rx="4" fill="#24788c"/>
+<text x="635" y="80" font-family="Arial,sans-serif" font-size="15" fill="#17324d">95.36%</text>
+<text x="24" y="135" font-family="Arial,sans-serif" font-size="15" fill="#17324d">Dense + LightGBM</text>
+<rect x="230" y="116" width="390" height="26" rx="4" fill="#e2e8f0"/>
+<rect x="230" y="116" width="384.11" height="26" rx="4" fill="#24788c"/>
+<text x="635" y="134" font-family="Arial,sans-serif" font-size="15" fill="#17324d">98.49%</text>
+<text x="24" y="189" font-family="Arial,sans-serif" font-size="15" fill="#17324d">Cross-encoder enhanced</text>
+<rect x="230" y="170" width="390" height="26" rx="4" fill="#e2e8f0"/>
+<rect x="230" y="170" width="384.93" height="26" rx="4" fill="#24788c"/>
+<text x="635" y="188" font-family="Arial,sans-serif" font-size="15" fill="#17324d">98.7%</text>
+</svg>

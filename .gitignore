@@ -14,3 +14,5 @@ output/
 *.pt
 *.pth
 *.safetensors
+
+results/synthetic_cpu.json

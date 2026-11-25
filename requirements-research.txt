@@ -1,0 +1,7 @@
+polars==1.44.2
+numpy==2.5.3
+scipy==1.18.1
+lightgbm==4.7.0
+scikit-learn==1.9.1
+jellyfish==1.2.1
+anyascii==0.3.3

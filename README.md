@@ -55,3 +55,9 @@ The first command tests packaging and CLI wiring only; it does not train models 
 - [Provenance and individual contributions](docs/PORTFOLIO_PROVENANCE.md)
 
 France is absent from the training data; cross-country generalization is not established independently. The full training run needs significant hardware and approved data. No new benchmark is claimed here. The repository does not contain a verified project-wide license; third-party model licenses do not grant rights to the challenge data or collaborators' code.
+
+## Additional research verification
+
+![Reported outer holdout comparison](docs/assets/holdout.svg)
+
+Historical project-reported comparison; see the technical report for evaluation context. [Training configuration and CPU demonstration](docs/TRAINING_AND_CPU_DEMO.md) and [individual contribution verification](docs/CONTRIBUTIONS.md) distinguish new reproducible checks from historical results. The CPU workflow publishes a real synthetic experiment artifact when run.
